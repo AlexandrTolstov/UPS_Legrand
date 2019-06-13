@@ -114,6 +114,15 @@ namespace UPS
                                         case 21:
                                             bat.Const90m = double.Parse(cell.Value.ToString());
                                             break;
+                                        case 22:
+                                            bat.LegArt_Euro = cell.Value.ToString();
+                                            break;
+                                        case 23:
+                                            bat.OtherArt_Euro = cell.Value.ToString();
+                                            break;
+                                        case 24:
+                                            bat.Descrip_Euro = cell.Value.ToString();
+                                            break;
                                         default:
                                             break;
                                     }

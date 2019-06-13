@@ -66,9 +66,149 @@
                                             </ComboBox>
                                         </StackPanel>
                                         <Label x:Name="TypeOfObj"></Label>
-                                        <DataGrid x:Name="BattDataGrid" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
-                                            RowBackground="LightGray" AlternatingRowBackground="White">
+                                        
+                                        <!--Таблица данных АКБ-->
+                                        <DataGrid x:Name="batteryGrid" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray" RowBackground="White">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn IsReadOnly="True" Header="ID" Binding="{Binding ID}"></DataGridTextColumn>
+                                                <DataGridTextColumn IsReadOnly="True" Header="Арт. Legrand" Binding="{Binding LegArt}" Width="100"></DataGridTextColumn>
+                                                <DataGridTextColumn IsReadOnly="True" Header="Арт. Сторонний" Binding="{Binding OtherArt}"></DataGridTextColumn>
+                                                <DataGridTextColumn IsReadOnly="True" Header="Тип" Binding="{Binding Mark}" Width="80"></DataGridTextColumn>
+                                                <DataGridTextColumn IsReadOnly="True" Header="Производитель" Binding="{Binding Manufact}" Width="100"></DataGridTextColumn>
+                                                <DataGridTextColumn IsReadOnly="True" Header="Описание" Binding="{Binding Descrip}" Width="200"></DataGridTextColumn>
+                                                <DataGridTextColumn IsReadOnly="True" Header="Емкость, А/ч" Binding="{Binding Capacity}" Width="100"></DataGridTextColumn>
+                                                <DataGridTextColumn IsReadOnly="True" Header="Мощность, Вт" Binding="{Binding Power}" Width="100"></DataGridTextColumn>
+                                                <DataGridTextColumn IsReadOnly="True" Header="Напряжение, В" Binding="{Binding Voltage}" Width="100"></DataGridTextColumn>
+                                            </DataGrid.Columns>
+
+                                            <DataGrid.RowDetailsTemplate>
+                                                <DataTemplate>
+                                                    <Grid Margin="25 3 3 3">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition></RowDefinition>
+                                                            <RowDefinition></RowDefinition>
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition></ColumnDefinition>
+                                                            <ColumnDefinition></ColumnDefinition>
+                                                            <ColumnDefinition></ColumnDefinition>
+                                                            <ColumnDefinition></ColumnDefinition>
+                                                            <ColumnDefinition></ColumnDefinition>
+                                                            <ColumnDefinition></ColumnDefinition>
+                                                            <ColumnDefinition></ColumnDefinition>
+                                                            <ColumnDefinition></ColumnDefinition>
+                                                            <ColumnDefinition></ColumnDefinition>
+                                                            <ColumnDefinition></ColumnDefinition>
+                                                            <ColumnDefinition></ColumnDefinition>
+                                                            <ColumnDefinition></ColumnDefinition>
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="12">Разрядная характеристика, Вт на ячейку 2В</Label>
+
+                                                        <Grid Grid.Column="0" Grid.Row="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition></RowDefinition>
+                                                                <RowDefinition></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Row="0" Text="2 min"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Text="{Binding Const2m, StringFormat=0.00}"></TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Column="1" Grid.Row="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition></RowDefinition>
+                                                                <RowDefinition></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Row="0" Text="4 min"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Text="{Binding Const4m, StringFormat=0.00}"></TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Column="2" Grid.Row="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition></RowDefinition>
+                                                                <RowDefinition></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Row="0" Text="5 min"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Text="{Binding Const5m, StringFormat=0.00}"></TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Column="3" Grid.Row="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition></RowDefinition>
+                                                                <RowDefinition></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Row="0" Text="6 min"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Text="{Binding Const6m, StringFormat=0.00}"></TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Column="4" Grid.Row="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition></RowDefinition>
+                                                                <RowDefinition></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Row="0" Text="8 min"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Text="{Binding Const8m, StringFormat=0.00}"></TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Column="5" Grid.Row="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition></RowDefinition>
+                                                                <RowDefinition></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Row="0" Text="10 min"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Text="{Binding Const10m, StringFormat=0.00}"></TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Column="6" Grid.Row="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition></RowDefinition>
+                                                                <RowDefinition></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Row="0" Text="15 min"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Text="{Binding Const15m, StringFormat=0.00}"></TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Column="7" Grid.Row="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition></RowDefinition>
+                                                                <RowDefinition></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Row="0" Text="20 min"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Text="{Binding Const20m, StringFormat=0.00}"></TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Column="8" Grid.Row="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition></RowDefinition>
+                                                                <RowDefinition></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Row="0" Text="30 min"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Text="{Binding Const30m, StringFormat=0.00}"></TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Column="9" Grid.Row="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition></RowDefinition>
+                                                                <RowDefinition></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Row="0" Text="45 min"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Text="{Binding Const45m, StringFormat=0.00}"></TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Column="10" Grid.Row="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition></RowDefinition>
+                                                                <RowDefinition></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Row="0" Text="60 min"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Text="{Binding Const60m, StringFormat=0.00}"></TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Column="11" Grid.Row="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition></RowDefinition>
+                                                                <RowDefinition></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Row="0" Text="90 min"></TextBlock>
+                                                            <TextBlock Grid.Row="1" Text="{Binding Const90m, StringFormat=0.00}"></TextBlock>
+                                                        </Grid>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </DataGrid.RowDetailsTemplate>
                                         </DataGrid>
+                                        
+
+                                        <!--Конец таблицы данных АКБ-->
+
                                     </StackPanel>
                                 </GroupBox>
                             </StackPanel>
@@ -89,7 +229,7 @@
                     <ScrollViewer>
                         <Border Background="White" BorderBrush="Gainsboro" BorderThickness="3">
                             <StackPanel>
-                                <DataGrid ItemsSource="{Binding BatList}" x:Name="phonesGrid" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+                                <DataGrid ItemsSource="{Binding BattaryList2}" x:Name="phonesGrid" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
                                             RowBackground="LightGray" AlternatingRowBackground="White">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn IsReadOnly="True" Header="ID" Binding="{Binding ID}"></DataGridTextColumn>
@@ -102,127 +242,154 @@
                                         <DataGridTextColumn IsReadOnly="True" Header="Мощность, Вт" Binding="{Binding Power}" Width="100"></DataGridTextColumn>
                                         <DataGridTextColumn IsReadOnly="True" Header="Напряжение, В" Binding="{Binding Voltage}" Width="100"></DataGridTextColumn>
                                     </DataGrid.Columns>
+                                    
+                                    
                                     <DataGrid.RowDetailsTemplate>
                                         <DataTemplate>
-                                            <Grid Margin="25 3 3 3">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition></RowDefinition>
-                                                    <RowDefinition></RowDefinition>
-                                                </Grid.RowDefinitions>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition></ColumnDefinition>
-                                                    <ColumnDefinition></ColumnDefinition>
-                                                    <ColumnDefinition></ColumnDefinition>
-                                                    <ColumnDefinition></ColumnDefinition>
-                                                    <ColumnDefinition></ColumnDefinition>
-                                                    <ColumnDefinition></ColumnDefinition>
-                                                    <ColumnDefinition></ColumnDefinition>
-                                                    <ColumnDefinition></ColumnDefinition>
-                                                    <ColumnDefinition></ColumnDefinition>
-                                                    <ColumnDefinition></ColumnDefinition>
-                                                    <ColumnDefinition></ColumnDefinition>
-                                                    <ColumnDefinition></ColumnDefinition>
-                                                </Grid.ColumnDefinitions>
+                                            <StackPanel>
+                                                <Grid Margin="25 3 3 3">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
 
-                                                <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="12">Разрядная характеристика, Вт на ячейку 2В</Label>
+                                                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="12">Разрядная характеристика, Вт на ячейку 2В</Label>
 
-                                                <Grid Grid.Column="0" Grid.Row="1">
+                                                    <Grid Grid.Column="0" Grid.Row="1">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition></RowDefinition>
+                                                            <RowDefinition></RowDefinition>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Grid.Row="0" Text="2 min"></TextBlock>
+                                                        <TextBlock Grid.Row="1" Text="{Binding Const2m, StringFormat=0.00}"></TextBlock>
+                                                    </Grid>
+                                                    <Grid Grid.Column="1" Grid.Row="1">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition></RowDefinition>
+                                                            <RowDefinition></RowDefinition>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Grid.Row="0" Text="4 min"></TextBlock>
+                                                        <TextBlock Grid.Row="1" Text="{Binding Const4m, StringFormat=0.00}"></TextBlock>
+                                                    </Grid>
+                                                    <Grid Grid.Column="2" Grid.Row="1">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition></RowDefinition>
+                                                            <RowDefinition></RowDefinition>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Grid.Row="0" Text="5 min"></TextBlock>
+                                                        <TextBlock Grid.Row="1" Text="{Binding Const5m, StringFormat=0.00}"></TextBlock>
+                                                    </Grid>
+                                                    <Grid Grid.Column="3" Grid.Row="1">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition></RowDefinition>
+                                                            <RowDefinition></RowDefinition>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Grid.Row="0" Text="6 min"></TextBlock>
+                                                        <TextBlock Grid.Row="1" Text="{Binding Const6m, StringFormat=0.00}"></TextBlock>
+                                                    </Grid>
+                                                    <Grid Grid.Column="4" Grid.Row="1">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition></RowDefinition>
+                                                            <RowDefinition></RowDefinition>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Grid.Row="0" Text="8 min"></TextBlock>
+                                                        <TextBlock Grid.Row="1" Text="{Binding Const8m, StringFormat=0.00}"></TextBlock>
+                                                    </Grid>
+                                                    <Grid Grid.Column="5" Grid.Row="1">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition></RowDefinition>
+                                                            <RowDefinition></RowDefinition>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Grid.Row="0" Text="10 min"></TextBlock>
+                                                        <TextBlock Grid.Row="1" Text="{Binding Const10m, StringFormat=0.00}"></TextBlock>
+                                                    </Grid>
+                                                    <Grid Grid.Column="6" Grid.Row="1">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition></RowDefinition>
+                                                            <RowDefinition></RowDefinition>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Grid.Row="0" Text="15 min"></TextBlock>
+                                                        <TextBlock Grid.Row="1" Text="{Binding Const15m, StringFormat=0.00}"></TextBlock>
+                                                    </Grid>
+                                                    <Grid Grid.Column="7" Grid.Row="1">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition></RowDefinition>
+                                                            <RowDefinition></RowDefinition>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Grid.Row="0" Text="20 min"></TextBlock>
+                                                        <TextBlock Grid.Row="1" Text="{Binding Const20m, StringFormat=0.00}"></TextBlock>
+                                                    </Grid>
+                                                    <Grid Grid.Column="8" Grid.Row="1">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition></RowDefinition>
+                                                            <RowDefinition></RowDefinition>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Grid.Row="0" Text="30 min"></TextBlock>
+                                                        <TextBlock Grid.Row="1" Text="{Binding Const30m, StringFormat=0.00}"></TextBlock>
+                                                    </Grid>
+                                                    <Grid Grid.Column="9" Grid.Row="1">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition></RowDefinition>
+                                                            <RowDefinition></RowDefinition>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Grid.Row="0" Text="45 min"></TextBlock>
+                                                        <TextBlock Grid.Row="1" Text="{Binding Const45m, StringFormat=0.00}"></TextBlock>
+                                                    </Grid>
+                                                    <Grid Grid.Column="10" Grid.Row="1">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition></RowDefinition>
+                                                            <RowDefinition></RowDefinition>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Grid.Row="0" Text="60 min"></TextBlock>
+                                                        <TextBlock Grid.Row="1" Text="{Binding Const60m, StringFormat=0.00}"></TextBlock>
+                                                    </Grid>
+                                                    <Grid Grid.Column="11" Grid.Row="1">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition></RowDefinition>
+                                                            <RowDefinition></RowDefinition>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Grid.Row="0" Text="90 min"></TextBlock>
+                                                        <TextBlock Grid.Row="1" Text="{Binding Const90m, StringFormat=0.00}"></TextBlock>
+                                                    </Grid>
+                                                </Grid>
+
+                                                <Grid Margin="25 3 3 3">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition></RowDefinition>
                                                         <RowDefinition></RowDefinition>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0" Text="2 min"></TextBlock>
-                                                    <TextBlock Grid.Row="1" Text="{Binding Const2m, StringFormat=0.00}"></TextBlock>
-                                                </Grid>
-                                                <Grid Grid.Column="1" Grid.Row="1">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition></RowDefinition>
                                                         <RowDefinition></RowDefinition>
                                                     </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0" Text="4 min"></TextBlock>
-                                                    <TextBlock Grid.Row="1" Text="{Binding Const4m, StringFormat=0.00}"></TextBlock>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    
+                                                    <Border Grid.Row="0" Grid.ColumnSpan="3" Background="Aqua"></Border>
+                                                    
+                                                    <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="Европейские АКБ"></TextBlock>
+                                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Артикул Legrand"></TextBlock>
+                                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Артикул сторонний"></TextBlock>
+                                                    <TextBlock Grid.Row="1" Grid.Column="2" Text="Описание"></TextBlock>
+                                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding LegArt_Euro}"></TextBlock>
+                                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding OtherArt_Euro}"></TextBlock>
+                                                    <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Descrip_Euro}"></TextBlock>
                                                 </Grid>
-                                                <Grid Grid.Column="2" Grid.Row="1">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition></RowDefinition>
-                                                        <RowDefinition></RowDefinition>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0" Text="5 min"></TextBlock>
-                                                    <TextBlock Grid.Row="1" Text="{Binding Const5m, StringFormat=0.00}"></TextBlock>
-                                                </Grid>
-                                                <Grid Grid.Column="3" Grid.Row="1">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition></RowDefinition>
-                                                        <RowDefinition></RowDefinition>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0" Text="6 min"></TextBlock>
-                                                    <TextBlock Grid.Row="1" Text="{Binding Const6m, StringFormat=0.00}"></TextBlock>
-                                                </Grid>
-                                                <Grid Grid.Column="4" Grid.Row="1">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition></RowDefinition>
-                                                        <RowDefinition></RowDefinition>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0" Text="8 min"></TextBlock>
-                                                    <TextBlock Grid.Row="1" Text="{Binding Const8m, StringFormat=0.00}"></TextBlock>
-                                                </Grid>
-                                                <Grid Grid.Column="5" Grid.Row="1">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition></RowDefinition>
-                                                        <RowDefinition></RowDefinition>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0" Text="10 min"></TextBlock>
-                                                    <TextBlock Grid.Row="1" Text="{Binding Const10m, StringFormat=0.00}"></TextBlock>
-                                                </Grid>
-                                                <Grid Grid.Column="6" Grid.Row="1">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition></RowDefinition>
-                                                        <RowDefinition></RowDefinition>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0" Text="15 min"></TextBlock>
-                                                    <TextBlock Grid.Row="1" Text="{Binding Const15m, StringFormat=0.00}"></TextBlock>
-                                                </Grid>
-                                                <Grid Grid.Column="7" Grid.Row="1">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition></RowDefinition>
-                                                        <RowDefinition></RowDefinition>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0" Text="20 min"></TextBlock>
-                                                    <TextBlock Grid.Row="1" Text="{Binding Const20m, StringFormat=0.00}"></TextBlock>
-                                                </Grid>
-                                                <Grid Grid.Column="8" Grid.Row="1">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition></RowDefinition>
-                                                        <RowDefinition></RowDefinition>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0" Text="30 min"></TextBlock>
-                                                    <TextBlock Grid.Row="1" Text="{Binding Const30m, StringFormat=0.00}"></TextBlock>
-                                                </Grid>
-                                                <Grid Grid.Column="9" Grid.Row="1">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition></RowDefinition>
-                                                        <RowDefinition></RowDefinition>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0" Text="45 min"></TextBlock>
-                                                    <TextBlock Grid.Row="1" Text="{Binding Const45m, StringFormat=0.00}"></TextBlock>
-                                                </Grid>
-                                                <Grid Grid.Column="10" Grid.Row="1">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition></RowDefinition>
-                                                        <RowDefinition></RowDefinition>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0" Text="60 min"></TextBlock>
-                                                    <TextBlock Grid.Row="1" Text="{Binding Const60m, StringFormat=0.00}"></TextBlock>
-                                                </Grid>
-                                                <Grid Grid.Column="11" Grid.Row="1">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition></RowDefinition>
-                                                        <RowDefinition></RowDefinition>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0" Text="90 min"></TextBlock>
-                                                    <TextBlock Grid.Row="1" Text="{Binding Const90m, StringFormat=0.00}"></TextBlock>
-                                                </Grid>
-                                            </Grid>
+                                            </StackPanel>
                                         </DataTemplate>
                                     </DataGrid.RowDetailsTemplate>
                                 </DataGrid>

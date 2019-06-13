@@ -20,6 +20,11 @@ namespace UPS
         public int Power { get; set; } //Мощность
         public int Voltage { get; set; } //Напряжение
 
+        //Европейский аналог
+        public string LegArt_Euro { get; set; } //Артикул Legrand
+        public string OtherArt_Euro { get; set; } //Артикул другого производителя
+        public string Descrip_Euro { get; set; } //Описание
+
         //Разрядная характеристика
         public double Const2m { get; set; } //2 min
         public double Const4m { get; set; } //4 min
