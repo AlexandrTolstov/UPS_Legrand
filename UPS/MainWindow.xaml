@@ -5,8 +5,235 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UPS"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="1200"
+        Icon="/jpg/Icon.jpg">
     <Grid>
-        <Label x:Name="Label1"></Label>
+        <TabControl x:Name="ups">
+
+            <!--Расчет АКБ-->
+            <TabItem x:Name="batCalc">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/jpg/Battary.png" Width="15" Height="15"/>
+                        <TextBlock Margin="3">Расчет АКБ</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ScrollViewer>
+                        <Border Background="White" BorderBrush="Gainsboro" BorderThickness="3">
+                            <StackPanel>
+                                <GroupBox Header="Номинальная мощность нагрузки" Padding="5" Margin="5">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label>Pn =</Label>
+                                        <TextBox x:Name="PowerTextBox" Width="50"></TextBox>
+                                        <Label>, кВт</Label>
+                                    </StackPanel>
+                                </GroupBox>
+                                <GroupBox Header="Выбор типа ИБП" Padding="5" Margin="5">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label>Тип</Label>
+                                            <ComboBox x:Name="UPSList" Width="100" VerticalAlignment="Top" 
+                                                      ItemsSource="{Binding UPSList}"
+                                                      DisplayMemberPath="Name" 
+                                                      SelectedValuePath="Name" 
+                                                      SelectedValue="{Binding Name}"
+                                                      SelectionChanged="UPSList_SelectionChanged">
+                                            </ComboBox>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label>КПД: </Label>
+                                            <Label x:Name="KPDLable"></Label>
+                                            <Label>,%</Label>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label>Nбат/линека</Label>
+                                            <Label x:Name="nBatLinLable"></Label>
+                                            <Label>- количество АКБ в линейке</Label>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </GroupBox>
+                                <GroupBox Header="Выбор типа АКБ" Padding="5" Margin="5">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label>АКБ</Label>
+                                            <ComboBox x:Name="BatList" Width="200" VerticalAlignment="Top" 
+                                                      ItemsSource="{Binding BattaryList}"
+                                                      DisplayMemberPath="Descrip" 
+                                                      SelectedValuePath="Descrip" 
+                                                      SelectedValue="{Binding Descrip}"
+                                                      SelectionChanged="BatList_SelectionChanged">
+                                            </ComboBox>
+                                        </StackPanel>
+                                        <Label x:Name="TypeOfObj"></Label>
+                                        <DataGrid x:Name="BattDataGrid" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+                                            RowBackground="LightGray" AlternatingRowBackground="White">
+                                        </DataGrid>
+                                    </StackPanel>
+                                </GroupBox>
+                            </StackPanel>
+                        </Border>
+                    </ScrollViewer>
+                </TabItem.Content>
+            </TabItem>
+
+            <!--Перечень АКБ-->
+            <TabItem x:Name="batList">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/jpg/Battary.png" Width="15" Height="15"/>
+                        <TextBlock Margin="3">Перечень АКБ</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ScrollViewer>
+                        <Border Background="White" BorderBrush="Gainsboro" BorderThickness="3">
+                            <StackPanel>
+                                <DataGrid ItemsSource="{Binding BatList}" x:Name="phonesGrid" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+                                            RowBackground="LightGray" AlternatingRowBackground="White">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn IsReadOnly="True" Header="ID" Binding="{Binding ID}"></DataGridTextColumn>
+                                        <DataGridTextColumn IsReadOnly="True" Header="Арт. Legrand" Binding="{Binding LegArt}" Width="100"></DataGridTextColumn>
+                                        <DataGridTextColumn IsReadOnly="True" Header="Арт. Сторонний" Binding="{Binding OtherArt}"></DataGridTextColumn>
+                                        <DataGridTextColumn IsReadOnly="True" Header="Тип" Binding="{Binding Mark}" Width="80"></DataGridTextColumn>
+                                        <DataGridTextColumn IsReadOnly="True" Header="Производитель" Binding="{Binding Manufact}" Width="100"></DataGridTextColumn>
+                                        <DataGridTextColumn IsReadOnly="True" Header="Описание" Binding="{Binding Descrip}" Width="200"></DataGridTextColumn>
+                                        <DataGridTextColumn IsReadOnly="True" Header="Емкость, А/ч" Binding="{Binding Capacity}" Width="100"></DataGridTextColumn>
+                                        <DataGridTextColumn IsReadOnly="True" Header="Мощность, Вт" Binding="{Binding Power}" Width="100"></DataGridTextColumn>
+                                        <DataGridTextColumn IsReadOnly="True" Header="Напряжение, В" Binding="{Binding Voltage}" Width="100"></DataGridTextColumn>
+                                    </DataGrid.Columns>
+                                    <DataGrid.RowDetailsTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="25 3 3 3">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+
+                                                <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="12">Разрядная характеристика, Вт на ячейку 2В</Label>
+
+                                                <Grid Grid.Column="0" Grid.Row="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Text="2 min"></TextBlock>
+                                                    <TextBlock Grid.Row="1" Text="{Binding Const2m, StringFormat=0.00}"></TextBlock>
+                                                </Grid>
+                                                <Grid Grid.Column="1" Grid.Row="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Text="4 min"></TextBlock>
+                                                    <TextBlock Grid.Row="1" Text="{Binding Const4m, StringFormat=0.00}"></TextBlock>
+                                                </Grid>
+                                                <Grid Grid.Column="2" Grid.Row="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Text="5 min"></TextBlock>
+                                                    <TextBlock Grid.Row="1" Text="{Binding Const5m, StringFormat=0.00}"></TextBlock>
+                                                </Grid>
+                                                <Grid Grid.Column="3" Grid.Row="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Text="6 min"></TextBlock>
+                                                    <TextBlock Grid.Row="1" Text="{Binding Const6m, StringFormat=0.00}"></TextBlock>
+                                                </Grid>
+                                                <Grid Grid.Column="4" Grid.Row="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Text="8 min"></TextBlock>
+                                                    <TextBlock Grid.Row="1" Text="{Binding Const8m, StringFormat=0.00}"></TextBlock>
+                                                </Grid>
+                                                <Grid Grid.Column="5" Grid.Row="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Text="10 min"></TextBlock>
+                                                    <TextBlock Grid.Row="1" Text="{Binding Const10m, StringFormat=0.00}"></TextBlock>
+                                                </Grid>
+                                                <Grid Grid.Column="6" Grid.Row="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Text="15 min"></TextBlock>
+                                                    <TextBlock Grid.Row="1" Text="{Binding Const15m, StringFormat=0.00}"></TextBlock>
+                                                </Grid>
+                                                <Grid Grid.Column="7" Grid.Row="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Text="20 min"></TextBlock>
+                                                    <TextBlock Grid.Row="1" Text="{Binding Const20m, StringFormat=0.00}"></TextBlock>
+                                                </Grid>
+                                                <Grid Grid.Column="8" Grid.Row="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Text="30 min"></TextBlock>
+                                                    <TextBlock Grid.Row="1" Text="{Binding Const30m, StringFormat=0.00}"></TextBlock>
+                                                </Grid>
+                                                <Grid Grid.Column="9" Grid.Row="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Text="45 min"></TextBlock>
+                                                    <TextBlock Grid.Row="1" Text="{Binding Const45m, StringFormat=0.00}"></TextBlock>
+                                                </Grid>
+                                                <Grid Grid.Column="10" Grid.Row="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Text="60 min"></TextBlock>
+                                                    <TextBlock Grid.Row="1" Text="{Binding Const60m, StringFormat=0.00}"></TextBlock>
+                                                </Grid>
+                                                <Grid Grid.Column="11" Grid.Row="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0" Text="90 min"></TextBlock>
+                                                    <TextBlock Grid.Row="1" Text="{Binding Const90m, StringFormat=0.00}"></TextBlock>
+                                                </Grid>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGrid.RowDetailsTemplate>
+                                </DataGrid>
+                            </StackPanel>
+                        </Border>
+                    </ScrollViewer>
+                </TabItem.Content>
+            </TabItem>
+
+            <!--Добавление АКБ-->
+            <TabItem x:Name="addBat"></TabItem>
+        </TabControl>
     </Grid>
 </Window>

@@ -8,109 +8,135 @@ using ClosedXML.Excel;
 
 namespace UPS
 {
-    class BattaryData
+    public class BattaryData
     {
-        readonly string name;
-        readonly string artLeg;
-        readonly string artOther;
-        readonly string nameOtherBrand;
-        readonly Dictionary<string, double> dischConst;
+        public int ID { get; set; } //ID АКБ
+        public string LegArt { get; set; } //Артикул Legrand
+        public string OtherArt { get; set; } //Артикул другого производителя
+        public string Mark { get; set; } //Марка
+        public string Manufact { get; set; } //Производитель
+        public string Descrip { get; set; } //Описание
+        public int Capacity { get; set; } //Емкость
+        public int Power { get; set; } //Мощность
+        public int Voltage { get; set; } //Напряжение
 
-        //Наименование АКБ
-        public string Name
-        {
-            get => name;
-        }
-        //Артикул АКБ Legrand
-        public string ArtLeg
-        {
-            get => artLeg;
-        }
-        //Артикул АКБ Другого бренда
-        public string ArtOther
-        {
-            get => artOther;
-        }
-        //Имя другого бренда
-        public string NameOtherBrand
-        {
-            get => nameOtherBrand;
-        }
         //Разрядная характеристика
-        public Dictionary<string, double> DischConst
-        {
-            get => dischConst;
-        }
+        public double Const2m { get; set; } //2 min
+        public double Const4m { get; set; } //4 min
+        public double Const5m { get; set; } //5 min
+        public double Const6m { get; set; } //6 min
+        public double Const8m { get; set; } //8 min
+        public double Const10m { get; set; } //10 min
+        public double Const15m { get; set; } //15 min
+        public double Const20m { get; set; } //20 min
+        public double Const30m { get; set; } //30 min
+        public double Const45m { get; set; } //45 min
+        public double Const60m { get; set; } //60 min
+        public double Const90m { get; set; } //90 min
 
         //Конструктор
         public BattaryData(
-            string name, 
-            string artLeg,
-            string artOther,
-            string nameOtherBrand,
-            float const5m,
-            float const10m,
-            float const15m,
-            float const20m,
-            float const30m,
-            float const45m,
-            float const60m,
-            float const2h,
-            float const3h,
-            float const5h,
-            float const10h,
-            float const20h)
+            int ID, 
+            string LegArt,
+            string OtherArt,
+            string Mark,
+            string Manufact,
+            string Descrip,
+            int Capacity,
+            int Power,
+            int Voltage,
+            double Const2m,
+            double Const4m,
+            double Const5m,
+            double Const6m,
+            double Const8m,
+            double Const10m,
+            double Const15m,
+            double Const20m,
+            double Const30m,
+            double Const45m,
+            double Const60m,
+            double Const90m)
         {
-            this.name = name;
-            this.artLeg = artLeg;
-            this.artOther = artOther;
-            this.nameOtherBrand = nameOtherBrand;
-            dischConst = new Dictionary<string, double>();
-            dischConst.Add("5 min", const5m);
-            dischConst.Add("10 min", const10m);
-            dischConst.Add("15 min", const15m);
-            dischConst.Add("20 min", const20m);
-            dischConst.Add("30 min", const30m);
-            dischConst.Add("45 min", const45m);
-            dischConst.Add("60 min", const60m);
-            dischConst.Add("2 h", const2h);
-            dischConst.Add("3 h", const3h);
-            dischConst.Add("5 h", const5h);
-            dischConst.Add("10 h", const10h);
-            dischConst.Add("20 h", const20h);
+            this.ID = ID;
+            this.LegArt = LegArt;
+            this.OtherArt = OtherArt;
+            this.Mark = Mark;
+            this.Manufact = Manufact;
+            this.Descrip = Descrip;
+            this.Capacity = Capacity;
+            this.Power = Power;
+            this.Voltage = Voltage;
+            this.Const2m = Const2m;
+            this.Const4m = Const4m;
+            this.Const5m = Const5m;
+            this.Const6m = Const6m;
+            this.Const8m = Const8m;
+            this.Const10m = Const10m;
+            this.Const15m = Const15m;
+            this.Const20m = Const20m;
+            this.Const30m = Const30m;
+            this.Const45m = Const45m;
+            this.Const60m = Const60m;
+            this.Const90m = Const90m;
         }
 
-        public void WriteToFile()
+        public BattaryData()
         {
-            using (var workbook = new XLWorkbook())
-            {
-                string workDirectory = Environment.CurrentDirectory;//Читает путь с файлом exe
-                string folderData = "/data";//Имя папки
+            this.ID = 0;
+            this.LegArt = "";
+            this.OtherArt = "";
+            this.Mark = "";
+            this.Manufact = "";
+            this.Descrip = "";
+            this.Capacity = 0;
+            this.Power = 0;
+            this.Voltage = 0;
+            this.Const2m = 0;
+            this.Const4m = 0;
+            this.Const5m = 0;
+            this.Const6m = 0;
+            this.Const8m = 0;
+            this.Const10m = 0;
+            this.Const15m = 0;
+            this.Const20m = 0;
+            this.Const30m = 0;
+            this.Const45m = 0;
+            this.Const60m = 0;
+            this.Const90m = 0;
+        }
+        //public void WriteToFile()
+        //{
+        //    using (var workbook = new XLWorkbook())
+        //    {
+        //        string workDirectory = Environment.CurrentDirectory;//Читает путь с файлом exe
+        //        string folderData = "/data";//Имя папки
 
-                //В случае если папка data отсутствует создаем ее
-                DirectoryInfo dirInfo = new DirectoryInfo(workDirectory + folderData);
-                if (!dirInfo.Exists)
-                {
-                    dirInfo.Create();
-                }
+        //        //В случае если папка data отсутствует создаем ее
+        //        DirectoryInfo dirInfo = new DirectoryInfo(workDirectory + folderData);
+        //        if (!dirInfo.Exists)
+        //        {
+        //            dirInfo.Create();
+        //        }
 
-                //Запись файла
-                string fileName = Name + ".xlsx";//Имя файла
-                string fullPathName = workDirectory + folderData + "/" + fileName;//Полный путь с именем файла
+        //        //Запись файла
+        //        string fileName = Name + ".xlsx";//Имя файла
+        //        string fullPathName = workDirectory + folderData + "/" + fileName;//Полный путь с именем файла
 
-                var worksheet = workbook.Worksheets.Add("Discharge constant");
+        //        var worksheet = workbook.Worksheets.Add("Discharge constant");
 
-                int i = 1;
-                foreach(var pair in DischConst)
-                {
-                    worksheet.Column(i).Cell(1).Value = pair.Key;
-                    worksheet.Column(i).Cell(2).Value = pair.Value;
-                    i++;
-                }
-                i = 1;
-                workbook.SaveAs(fullPathName);
-            }
+        //        int i = 1;
+        //        foreach(var pair in DischConst)
+        //        {
+        //            worksheet.Column(i).Cell(1).Value = pair.Key;
+        //            worksheet.Column(i).Cell(2).Value = pair.Value;
+        //            i++;
+        //        }
+        //        i = 1;
+        //        workbook.SaveAs(fullPathName);
+        //    }
             
-        }
+        //}
     }
+
 }
