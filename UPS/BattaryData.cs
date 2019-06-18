@@ -8,7 +8,7 @@ using ClosedXML.Excel;
 
 namespace UPS
 {
-    public class BattaryData
+    public class BattaryData:ICloneable
     {
         public int ID { get; set; } //ID АКБ
         public string LegArt { get; set; } //Артикул Legrand
@@ -110,6 +110,8 @@ namespace UPS
             this.Const60m = 0;
             this.Const90m = 0;
         }
+
+        public object Clone() => this.MemberwiseClone();
         //public void WriteToFile()
         //{
         //    using (var workbook = new XLWorkbook())
@@ -140,7 +142,7 @@ namespace UPS
         //        i = 1;
         //        workbook.SaveAs(fullPathName);
         //    }
-            
+
         //}
     }
 

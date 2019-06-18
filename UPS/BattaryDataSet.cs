@@ -8,7 +8,7 @@ using ClosedXML.Excel;
 
 namespace UPS
 {
-    public class BattaryDataSet
+    public class BattaryDataSet:ICloneable
     {
         public List<BattaryData> battaryDatas { get; set; } //Перечень АКБ
         public BattaryDataSet()
@@ -144,5 +144,21 @@ namespace UPS
                 }
             }
         }
+
+        //public object Clone()
+        //{
+        //    BattaryDataSet newBatDatSet = (BattaryDataSet)this.MemberwiseClone();
+        //    List<BattaryData> tempBatDataSet = new List<BattaryData>();
+
+        //    foreach (var it in this.battaryDatas)
+        //    {
+        //        BattaryData temBatData = (BattaryData)it.Clone();
+        //        tempBatDataSet.Add(temBatData);
+        //    }
+        //    newBatDatSet.battaryDatas = tempBatDataSet;
+        //    return newBatDatSet;
+        //}
+
+        public object Clone() => this.MemberwiseClone();
     }
 }

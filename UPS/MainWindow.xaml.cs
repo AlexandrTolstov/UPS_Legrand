@@ -33,10 +33,26 @@ namespace UPS
         {
             BattaryDataSet battaryDataSet = new BattaryDataSet();
             BattaryDataSet battaryDataSet2 = new BattaryDataSet();
+            List<TimeSet> batTimes = new List<TimeSet>
+            {
+                new TimeSet(2),
+                new TimeSet(4),
+                new TimeSet(5),
+                new TimeSet(6),
+                new TimeSet(8),
+                new TimeSet(10),
+                new TimeSet(15),
+                new TimeSet(20),
+                new TimeSet(30),
+                new TimeSet(45),
+                new TimeSet(60),
+                new TimeSet(90)
+            };
             ListOfUPS listOfUPS = new ListOfUPS();
             public IEnumerable<BattaryData> BattaryList => battaryDataSet.battaryDatas; //Считывает значения с BattaryDataSet
             public IEnumerable<BattaryData> BattaryList2 => battaryDataSet2.battaryDatas; //Считывает значения с BattaryDataSet
             public IEnumerable<UPSData> UPSList => listOfUPS.UPSDatas; //Считывает значения с listOfUPS
+            public IEnumerable<TimeSet> batTimeList => batTimes; //Время автономии
         }
         private void UPSList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -51,6 +67,11 @@ namespace UPS
             if (batteryGrid.Items.Count > 0)
                 batteryGrid.Items.RemoveAt(0);
             batteryGrid.Items.Add(batData);
+        }
+
+        private void TimeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

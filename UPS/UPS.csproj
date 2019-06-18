@@ -75,6 +75,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="TimeSet.cs" />
     <Compile Include="UPSData.cs" />
     <Page Include="ErrorWindow.xaml">
       <SubType>Designer</SubType>
