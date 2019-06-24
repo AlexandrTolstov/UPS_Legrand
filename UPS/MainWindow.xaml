@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UPS"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1200"
+        Title="MainWindow" Height="800" Width="1200"
         Icon="/jpg/Icon.jpg"
         Name="mainWindow">
     <Grid>
@@ -23,262 +23,283 @@
                     <ScrollViewer>
                         <Border Background="White" BorderBrush="Gainsboro" BorderThickness="3">
                             <StackPanel>
-                                <GroupBox Header="Номинальная мощность нагрузки" Padding="5" Margin="5">
+                                <GroupBox Header="Искомые величины" FontWeight="Bold">
                                     <StackPanel Orientation="Horizontal">
-                                        <Label>Pn =</Label>
-                                        <TextBox x:Name="PowerTextBox" Width="50"></TextBox>
-                                        <Label>, кВт</Label>
+                                        <GroupBox Header="Количесво линеек" Padding="5" Margin="5">
+                                            <StackPanel Background="LightSeaGreen"  Orientation="Horizontal">
+                                                <Label FontSize="15" >Nлинеек =</Label>
+                                                <Label FontSize="15" x:Name="numOfLin"></Label>
+                                            </StackPanel>
+                                        </GroupBox>
+                                        <GroupBox Header="Количесво АКБ" Padding="5" Margin="5">
+                                            <StackPanel Background="LightSeaGreen"  Orientation="Horizontal">
+                                                <Label FontSize="15" >Nакб =</Label>
+                                                <Label FontSize="15" x:Name="numOfAKB"></Label>
+                                            </StackPanel>
+                                        </GroupBox>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Выбор типа ИБП" Padding="5" Margin="5">
+
+                                <GroupBox Header="Для заполнения" FontWeight="Bold">
                                     <StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Label>Тип</Label>
-                                            <ComboBox x:Name="UPSList" Width="100" VerticalAlignment="Top" 
+                                        <GroupBox Header="Номинальная мощность нагрузки" FontWeight="Bold" Padding="5" Margin="5">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label FontWeight="Normal">Pn =</Label>
+                                                <TextBox FontWeight="Normal" x:Name="PowerTextBox" Width="50" TextChanged="PowerTextBox_TextChanged"></TextBox>
+                                                <Label FontWeight="Normal">, кВт</Label>
+                                            </StackPanel>
+                                        </GroupBox>
+                                        <GroupBox Header="Выбор типа ИБП" Padding="5" Margin="5">
+                                            <StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label FontWeight="Normal">Тип</Label>
+                                                    <ComboBox FontWeight="Normal" x:Name="UPSList" Width="100" VerticalAlignment="Top" 
                                                       ItemsSource="{Binding UPSList}"
                                                       DisplayMemberPath="Name" 
                                                       SelectedValuePath="Name" 
                                                       SelectedValue="{Binding Name}"
                                                       SelectionChanged="UPSList_SelectionChanged">
-                                            </ComboBox>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Label>КПД: </Label>
-                                            <Label x:Name="KPDLable"></Label>
-                                            <Label>,%</Label>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Label>Nбат/линека</Label>
-                                            <Label x:Name="nBatLinLable"></Label>
-                                            <Label>- количество АКБ в линейке</Label>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </GroupBox>
-                                <GroupBox Header="Выбор типа АКБ" Padding="5" Margin="5">
-                                    <StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Label>АКБ</Label>
-                                            <ComboBox x:Name="BatList" Width="200" VerticalAlignment="Top" 
+                                                    </ComboBox>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label FontWeight="Normal">КПД:</Label>
+                                                    <Label FontWeight="Normal" x:Name="KPDLable"></Label>
+                                                    <Label FontWeight="Normal">,%</Label>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label FontWeight="Normal">Nбат/линека</Label>
+                                                    <Label FontWeight="Normal" x:Name="nBatLinLable"></Label>
+                                                    <Label FontWeight="Normal">- количество АКБ в линейке</Label>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </GroupBox>
+                                        <GroupBox Header="Выбор типа АКБ" Padding="5" Margin="5">
+                                            <StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label FontWeight="Normal">АКБ</Label>
+                                                    <ComboBox FontWeight="Normal" x:Name="BatList" Width="200" VerticalAlignment="Top" 
                                                       ItemsSource="{Binding BattaryList}"
                                                       DisplayMemberPath="Descrip" 
                                                       SelectedValuePath="Descrip" 
                                                       SelectedValue="{Binding Descrip}"
                                                       SelectionChanged="BatList_SelectionChanged">
-                                            </ComboBox>
-                                        </StackPanel>
-                                        <Label x:Name="TypeOfObj"></Label>
-                                        
-                                        <!--Таблица данных АКБ-->
-                                        <DataGrid x:Name="batteryGrid" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray" RowBackground="White">
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn IsReadOnly="True" Header="ID" Binding="{Binding ID}"></DataGridTextColumn>
-                                                <DataGridTextColumn IsReadOnly="True" Header="Арт. Legrand" Binding="{Binding LegArt}" Width="100"></DataGridTextColumn>
-                                                <DataGridTextColumn IsReadOnly="True" Header="Арт. Сторонний" Binding="{Binding OtherArt}"></DataGridTextColumn>
-                                                <DataGridTextColumn IsReadOnly="True" Header="Тип" Binding="{Binding Mark}" Width="80"></DataGridTextColumn>
-                                                <DataGridTextColumn IsReadOnly="True" Header="Производитель" Binding="{Binding Manufact}" Width="100"></DataGridTextColumn>
-                                                <DataGridTextColumn IsReadOnly="True" Header="Описание" Binding="{Binding Descrip}" Width="200"></DataGridTextColumn>
-                                                <DataGridTextColumn IsReadOnly="True" Header="Емкость, А/ч" Binding="{Binding Capacity}" Width="100"></DataGridTextColumn>
-                                                <DataGridTextColumn IsReadOnly="True" Header="Мощность, Вт" Binding="{Binding Power}" Width="100"></DataGridTextColumn>
-                                                <DataGridTextColumn IsReadOnly="True" Header="Напряжение, В" Binding="{Binding Voltage}" Width="100"></DataGridTextColumn>
-                                            </DataGrid.Columns>
+                                                    </ComboBox>
+                                                </StackPanel>
+                                                <Label FontWeight="Normal" x:Name="TypeOfObj"></Label>
 
-                                            <DataGrid.RowDetailsTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel>
-                                                        <Grid Margin="25 3 3 3" HorizontalAlignment="Left">
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition></RowDefinition>
-                                                                <RowDefinition></RowDefinition>
-                                                            </Grid.RowDefinitions>
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition></ColumnDefinition>
-                                                                <ColumnDefinition></ColumnDefinition>
-                                                                <ColumnDefinition></ColumnDefinition>
-                                                                <ColumnDefinition></ColumnDefinition>
-                                                                <ColumnDefinition></ColumnDefinition>
-                                                                <ColumnDefinition></ColumnDefinition>
-                                                                <ColumnDefinition></ColumnDefinition>
-                                                                <ColumnDefinition></ColumnDefinition>
-                                                                <ColumnDefinition></ColumnDefinition>
-                                                                <ColumnDefinition></ColumnDefinition>
-                                                                <ColumnDefinition></ColumnDefinition>
-                                                                <ColumnDefinition></ColumnDefinition>
-                                                            </Grid.ColumnDefinitions>
+                                                <!--Таблица данных АКБ-->
+                                                <DataGrid FontWeight="Normal" x:Name="batteryGrid" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray" RowBackground="White">
+                                                    <DataGrid.Columns>
+                                                        <DataGridTextColumn IsReadOnly="True" Header="ID" Binding="{Binding ID}"></DataGridTextColumn>
+                                                        <DataGridTextColumn IsReadOnly="True" Header="Арт. Legrand" Binding="{Binding LegArt}" Width="100"></DataGridTextColumn>
+                                                        <DataGridTextColumn IsReadOnly="True" Header="Арт. Сторонний" Binding="{Binding OtherArt}"></DataGridTextColumn>
+                                                        <DataGridTextColumn IsReadOnly="True" Header="Тип" Binding="{Binding Mark}" Width="80"></DataGridTextColumn>
+                                                        <DataGridTextColumn IsReadOnly="True" Header="Производитель" Binding="{Binding Manufact}" Width="100"></DataGridTextColumn>
+                                                        <DataGridTextColumn IsReadOnly="True" Header="Описание" Binding="{Binding Descrip}" Width="200"></DataGridTextColumn>
+                                                        <DataGridTextColumn IsReadOnly="True" Header="Емкость, А/ч" Binding="{Binding Capacity}" Width="100"></DataGridTextColumn>
+                                                        <DataGridTextColumn IsReadOnly="True" Header="Мощность, Вт" Binding="{Binding Power}" Width="100"></DataGridTextColumn>
+                                                        <DataGridTextColumn IsReadOnly="True" Header="Напряжение, В" Binding="{Binding Voltage}" Width="100"></DataGridTextColumn>
+                                                    </DataGrid.Columns>
 
-                                                            <Border Grid.Row="0" Grid.ColumnSpan="12" Background="Aqua"></Border>
-                                                            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="12">Разрядная характеристика, Вт на ячейку 2В</Label>
+                                                    <DataGrid.RowDetailsTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel>
+                                                                <Grid Margin="25 3 3 3" HorizontalAlignment="Left">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition></RowDefinition>
+                                                                        <RowDefinition></RowDefinition>
+                                                                    </Grid.RowDefinitions>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition></ColumnDefinition>
+                                                                        <ColumnDefinition></ColumnDefinition>
+                                                                        <ColumnDefinition></ColumnDefinition>
+                                                                        <ColumnDefinition></ColumnDefinition>
+                                                                        <ColumnDefinition></ColumnDefinition>
+                                                                        <ColumnDefinition></ColumnDefinition>
+                                                                        <ColumnDefinition></ColumnDefinition>
+                                                                        <ColumnDefinition></ColumnDefinition>
+                                                                        <ColumnDefinition></ColumnDefinition>
+                                                                        <ColumnDefinition></ColumnDefinition>
+                                                                        <ColumnDefinition></ColumnDefinition>
+                                                                        <ColumnDefinition></ColumnDefinition>
+                                                                    </Grid.ColumnDefinitions>
 
-                                                            <Grid Grid.Column="0" Grid.Row="1">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition></RowDefinition>
-                                                                    <RowDefinition></RowDefinition>
-                                                                </Grid.RowDefinitions>
-                                                                <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <TextBlock Grid.Row="0" Margin="3" Text="2 min"></TextBlock>
-                                                                <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const2m, StringFormat=0.00}"></TextBlock>
-                                                            </Grid>
-                                                            <Grid Grid.Column="1" Grid.Row="1">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition></RowDefinition>
-                                                                    <RowDefinition></RowDefinition>
-                                                                </Grid.RowDefinitions>
-                                                                <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <TextBlock Grid.Row="0" Margin="3" Text="4 min"></TextBlock>
-                                                                <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const4m, StringFormat=0.00}"></TextBlock>
-                                                            </Grid>
-                                                            <Grid Grid.Column="2" Grid.Row="1">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition></RowDefinition>
-                                                                    <RowDefinition></RowDefinition>
-                                                                </Grid.RowDefinitions>
-                                                                <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <TextBlock Grid.Row="0" Margin="3" Text="5 min"></TextBlock>
-                                                                <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const5m, StringFormat=0.00}"></TextBlock>
-                                                            </Grid>
-                                                            <Grid Grid.Column="3" Grid.Row="1">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition></RowDefinition>
-                                                                    <RowDefinition></RowDefinition>
-                                                                </Grid.RowDefinitions>
-                                                                <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <TextBlock Grid.Row="0" Margin="3" Text="6 min"></TextBlock>
-                                                                <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const6m, StringFormat=0.00}"></TextBlock>
-                                                            </Grid>
-                                                            <Grid Grid.Column="4" Grid.Row="1">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition></RowDefinition>
-                                                                    <RowDefinition></RowDefinition>
-                                                                </Grid.RowDefinitions>
-                                                                <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <TextBlock Grid.Row="0" Margin="3" Text="8 min"></TextBlock>
-                                                                <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const8m, StringFormat=0.00}"></TextBlock>
-                                                            </Grid>
-                                                            <Grid Grid.Column="5" Grid.Row="1">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition></RowDefinition>
-                                                                    <RowDefinition></RowDefinition>
-                                                                </Grid.RowDefinitions>
-                                                                <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <TextBlock Grid.Row="0" Margin="3" Text="10 min"></TextBlock>
-                                                                <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const10m, StringFormat=0.00}"></TextBlock>
-                                                            </Grid>
-                                                            <Grid Grid.Column="6" Grid.Row="1">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition></RowDefinition>
-                                                                    <RowDefinition></RowDefinition>
-                                                                </Grid.RowDefinitions>
-                                                                <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <TextBlock Grid.Row="0" Margin="3" Text="15 min"></TextBlock>
-                                                                <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const15m, StringFormat=0.00}"></TextBlock>
-                                                            </Grid>
-                                                            <Grid Grid.Column="7" Grid.Row="1">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition></RowDefinition>
-                                                                    <RowDefinition></RowDefinition>
-                                                                </Grid.RowDefinitions>
-                                                                <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <TextBlock Grid.Row="0" Margin="3" Text="20 min"></TextBlock>
-                                                                <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const20m, StringFormat=0.00}"></TextBlock>
-                                                            </Grid>
-                                                            <Grid Grid.Column="8" Grid.Row="1">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition></RowDefinition>
-                                                                    <RowDefinition></RowDefinition>
-                                                                </Grid.RowDefinitions>
-                                                                <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <TextBlock Grid.Row="0" Margin="3" Text="30 min"></TextBlock>
-                                                                <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const30m, StringFormat=0.00}"></TextBlock>
-                                                            </Grid>
-                                                            <Grid Grid.Column="9" Grid.Row="1">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition></RowDefinition>
-                                                                    <RowDefinition></RowDefinition>
-                                                                </Grid.RowDefinitions>
-                                                                <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <TextBlock Grid.Row="0" Margin="3" Text="45 min"></TextBlock>
-                                                                <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const45m, StringFormat=0.00}"></TextBlock>
-                                                            </Grid>
-                                                            <Grid Grid.Column="10" Grid.Row="1">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition></RowDefinition>
-                                                                    <RowDefinition></RowDefinition>
-                                                                </Grid.RowDefinitions>
-                                                                <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <TextBlock Grid.Row="0" Margin="3" Text="60 min"></TextBlock>
-                                                                <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const60m, StringFormat=0.00}"></TextBlock>
-                                                            </Grid>
-                                                            <Grid Grid.Column="11" Grid.Row="1">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition></RowDefinition>
-                                                                    <RowDefinition></RowDefinition>
-                                                                </Grid.RowDefinitions>
-                                                                <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                                <TextBlock Grid.Row="0" Margin="3" Text="90 min"></TextBlock>
-                                                                <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const90m, StringFormat=0.00}"></TextBlock>
-                                                            </Grid>
-                                                        </Grid>
-                                                        <Grid Margin="25 3 3 3" HorizontalAlignment="Left">
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition></RowDefinition>
-                                                                <RowDefinition></RowDefinition>
-                                                                <RowDefinition></RowDefinition>
-                                                            </Grid.RowDefinitions>
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition></ColumnDefinition>
-                                                                <ColumnDefinition></ColumnDefinition>
-                                                                <ColumnDefinition></ColumnDefinition>
-                                                            </Grid.ColumnDefinitions>
+                                                                    <Border Grid.Row="0" Grid.ColumnSpan="12" Background="Aqua"></Border>
+                                                                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="12">Разрядная характеристика, Вт на ячейку 2В</Label>
 
-                                                            <Border Grid.Row="0" Grid.ColumnSpan="3" Background="Aqua"></Border>
-                                                            <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                            <Border Grid.Row="1" Grid.Column="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                            <Border Grid.Row="1" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                            <Border Grid.Row="2" Grid.Column="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                            <Border Grid.Row="2" Grid.Column="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
-                                                            <Border Grid.Row="2" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                    <Grid Grid.Column="0" Grid.Row="1">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition></RowDefinition>
+                                                                            <RowDefinition></RowDefinition>
+                                                                        </Grid.RowDefinitions>
+                                                                        <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <TextBlock Grid.Row="0" Margin="3" Text="2 min"></TextBlock>
+                                                                        <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const2m, StringFormat=0.00}"></TextBlock>
+                                                                    </Grid>
+                                                                    <Grid Grid.Column="1" Grid.Row="1">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition></RowDefinition>
+                                                                            <RowDefinition></RowDefinition>
+                                                                        </Grid.RowDefinitions>
+                                                                        <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <TextBlock Grid.Row="0" Margin="3" Text="4 min"></TextBlock>
+                                                                        <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const4m, StringFormat=0.00}"></TextBlock>
+                                                                    </Grid>
+                                                                    <Grid Grid.Column="2" Grid.Row="1">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition></RowDefinition>
+                                                                            <RowDefinition></RowDefinition>
+                                                                        </Grid.RowDefinitions>
+                                                                        <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <TextBlock Grid.Row="0" Margin="3" Text="5 min"></TextBlock>
+                                                                        <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const5m, StringFormat=0.00}"></TextBlock>
+                                                                    </Grid>
+                                                                    <Grid Grid.Column="3" Grid.Row="1">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition></RowDefinition>
+                                                                            <RowDefinition></RowDefinition>
+                                                                        </Grid.RowDefinitions>
+                                                                        <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <TextBlock Grid.Row="0" Margin="3" Text="6 min"></TextBlock>
+                                                                        <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const6m, StringFormat=0.00}"></TextBlock>
+                                                                    </Grid>
+                                                                    <Grid Grid.Column="4" Grid.Row="1">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition></RowDefinition>
+                                                                            <RowDefinition></RowDefinition>
+                                                                        </Grid.RowDefinitions>
+                                                                        <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <TextBlock Grid.Row="0" Margin="3" Text="8 min"></TextBlock>
+                                                                        <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const8m, StringFormat=0.00}"></TextBlock>
+                                                                    </Grid>
+                                                                    <Grid Grid.Column="5" Grid.Row="1">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition></RowDefinition>
+                                                                            <RowDefinition></RowDefinition>
+                                                                        </Grid.RowDefinitions>
+                                                                        <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <TextBlock Grid.Row="0" Margin="3" Text="10 min"></TextBlock>
+                                                                        <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const10m, StringFormat=0.00}"></TextBlock>
+                                                                    </Grid>
+                                                                    <Grid Grid.Column="6" Grid.Row="1">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition></RowDefinition>
+                                                                            <RowDefinition></RowDefinition>
+                                                                        </Grid.RowDefinitions>
+                                                                        <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <TextBlock Grid.Row="0" Margin="3" Text="15 min"></TextBlock>
+                                                                        <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const15m, StringFormat=0.00}"></TextBlock>
+                                                                    </Grid>
+                                                                    <Grid Grid.Column="7" Grid.Row="1">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition></RowDefinition>
+                                                                            <RowDefinition></RowDefinition>
+                                                                        </Grid.RowDefinitions>
+                                                                        <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <TextBlock Grid.Row="0" Margin="3" Text="20 min"></TextBlock>
+                                                                        <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const20m, StringFormat=0.00}"></TextBlock>
+                                                                    </Grid>
+                                                                    <Grid Grid.Column="8" Grid.Row="1">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition></RowDefinition>
+                                                                            <RowDefinition></RowDefinition>
+                                                                        </Grid.RowDefinitions>
+                                                                        <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <TextBlock Grid.Row="0" Margin="3" Text="30 min"></TextBlock>
+                                                                        <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const30m, StringFormat=0.00}"></TextBlock>
+                                                                    </Grid>
+                                                                    <Grid Grid.Column="9" Grid.Row="1">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition></RowDefinition>
+                                                                            <RowDefinition></RowDefinition>
+                                                                        </Grid.RowDefinitions>
+                                                                        <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <TextBlock Grid.Row="0" Margin="3" Text="45 min"></TextBlock>
+                                                                        <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const45m, StringFormat=0.00}"></TextBlock>
+                                                                    </Grid>
+                                                                    <Grid Grid.Column="10" Grid.Row="1">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition></RowDefinition>
+                                                                            <RowDefinition></RowDefinition>
+                                                                        </Grid.RowDefinitions>
+                                                                        <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <TextBlock Grid.Row="0" Margin="3" Text="60 min"></TextBlock>
+                                                                        <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const60m, StringFormat=0.00}"></TextBlock>
+                                                                    </Grid>
+                                                                    <Grid Grid.Column="11" Grid.Row="1">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition></RowDefinition>
+                                                                            <RowDefinition></RowDefinition>
+                                                                        </Grid.RowDefinitions>
+                                                                        <Border Grid.Row="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                        <TextBlock Grid.Row="0" Margin="3" Text="90 min"></TextBlock>
+                                                                        <TextBlock Grid.Row="1" Margin="3" Text="{Binding Const90m, StringFormat=0.00}"></TextBlock>
+                                                                    </Grid>
+                                                                </Grid>
+                                                                <Grid Margin="25 3 3 3" HorizontalAlignment="Left">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition></RowDefinition>
+                                                                        <RowDefinition></RowDefinition>
+                                                                        <RowDefinition></RowDefinition>
+                                                                    </Grid.RowDefinitions>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition></ColumnDefinition>
+                                                                        <ColumnDefinition></ColumnDefinition>
+                                                                        <ColumnDefinition></ColumnDefinition>
+                                                                    </Grid.ColumnDefinitions>
 
-                                                            <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Margin="3" Text="Европейские АКБ"></TextBlock>
-                                                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="3" Text="Артикул Legrand"></TextBlock>
-                                                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="3" Text="Артикул сторонний"></TextBlock>
-                                                            <TextBlock Grid.Row="1" Grid.Column="2" Margin="3" Text="Описание"></TextBlock>
-                                                            <TextBlock Grid.Row="2" Grid.Column="0" Margin="3" Text="{Binding LegArt_Euro}"></TextBlock>
-                                                            <TextBlock Grid.Row="2" Grid.Column="1" Margin="3" Text="{Binding OtherArt_Euro}"></TextBlock>
-                                                            <TextBlock Grid.Row="2" Grid.Column="2" Margin="3" Text="{Binding Descrip_Euro}"></TextBlock>
-                                                        </Grid>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </DataGrid.RowDetailsTemplate>
-                                        </DataGrid>
-                                        
+                                                                    <Border Grid.Row="0" Grid.ColumnSpan="3" Background="Aqua"></Border>
+                                                                    <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                    <Border Grid.Row="1" Grid.Column="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                    <Border Grid.Row="1" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                    <Border Grid.Row="2" Grid.Column="0" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                    <Border Grid.Row="2" Grid.Column="1" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
+                                                                    <Border Grid.Row="2" Grid.Column="2" BorderThickness="1" BorderBrush="Black" Background="White"></Border>
 
-                                        <!--Конец таблицы данных АКБ-->
+                                                                    <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Margin="3" Text="Европейские АКБ"></TextBlock>
+                                                                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="3" Text="Артикул Legrand"></TextBlock>
+                                                                    <TextBlock Grid.Row="1" Grid.Column="1" Margin="3" Text="Артикул сторонний"></TextBlock>
+                                                                    <TextBlock Grid.Row="1" Grid.Column="2" Margin="3" Text="Описание"></TextBlock>
+                                                                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="3" Text="{Binding LegArt_Euro}"></TextBlock>
+                                                                    <TextBlock Grid.Row="2" Grid.Column="1" Margin="3" Text="{Binding OtherArt_Euro}"></TextBlock>
+                                                                    <TextBlock Grid.Row="2" Grid.Column="2" Margin="3" Text="{Binding Descrip_Euro}"></TextBlock>
+                                                                </Grid>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </DataGrid.RowDetailsTemplate>
+                                                </DataGrid>
 
-                                    </StackPanel>
-                                </GroupBox>
-                                <GroupBox Header="Выбор времени автономии" Padding="5" Margin="5">
-                                    <StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Label>Time</Label>
-                                            <ComboBox x:Name="TimeList" Width="90" VerticalAlignment="Top" 
+
+                                                <!--Конец таблицы данных АКБ-->
+
+                                            </StackPanel>
+                                        </GroupBox>
+                                        <GroupBox Header="Выбор времени автономии" Padding="5" Margin="5">
+                                            <StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label FontWeight="Normal">Time</Label>
+                                                    <ComboBox FontWeight="Normal" x:Name="TimeList" Width="90" VerticalAlignment="Top" 
                                                       ItemsSource="{Binding batTimeList}"
                                                       DisplayMemberPath="timStr" 
                                                       SelectedValuePath="time" 
                                                       SelectedValue="{Binding time}"
                                                       SelectionChanged="TimeList_SelectionChanged">
-                                            </ComboBox>
-                                        </StackPanel>
+                                                    </ComboBox>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </GroupBox>
                                     </StackPanel>
                                 </GroupBox>
                             </StackPanel>

@@ -54,24 +54,133 @@ namespace UPS
             public IEnumerable<UPSData> UPSList => listOfUPS.UPSDatas; //Считывает значения с listOfUPS
             public IEnumerable<TimeSet> batTimeList => batTimes; //Время автономии
         }
+        public void RaschetKolLineek()
+        {
+            int Pn; //Номинальная мощность, кВт
+            if (!Int32.TryParse(PowerTextBox.Text, out Pn))
+            {
+                Pn = 0;
+            }
+            int KPDakb; //КПД АКБ
+            int NbatLin; //Количество батарей в линейке
+
+            if (KPDLable.Content != null && nBatLinLable.Content != null)
+            {
+                if (!Int32.TryParse(KPDLable.Content.ToString(), out KPDakb))
+                {
+                    KPDakb = 0;
+                }
+                if (!Int32.TryParse(nBatLinLable.Content.ToString(), out NbatLin))
+                {
+                    NbatLin = 0;
+                }
+            }
+            else
+            {
+                KPDakb = 0;
+                NbatLin = 0;
+            }
+
+            BattaryData selectedBattaryObj = (BattaryData)BatList.SelectedItem; //Выбранный АКБ объект
+            TimeSet selectedTimeObj = (TimeSet)TimeList.SelectedItem; //Выбранное время объект
+
+            int selectedTime; //Выбранное время
+            double dischargeHaract; //Разрядная характеристика
+            if (selectedBattaryObj != null && selectedTimeObj != null)
+            {
+                selectedTime = selectedTimeObj.time; //Выбранное время
+                switch (selectedTime)
+                {
+                    case 2:
+                        dischargeHaract = selectedBattaryObj.Const2m;
+                        break;
+                    case 4:
+                        dischargeHaract = selectedBattaryObj.Const4m;
+                        break;
+                    case 5:
+                        dischargeHaract = selectedBattaryObj.Const5m;
+                        break;
+                    case 6:
+                        dischargeHaract = selectedBattaryObj.Const6m;
+                        break;
+                    case 8:
+                        dischargeHaract = selectedBattaryObj.Const8m;
+                        break;
+                    case 10:
+                        dischargeHaract = selectedBattaryObj.Const10m;
+                        break;
+                    case 15:
+                        dischargeHaract = selectedBattaryObj.Const15m;
+                        break;
+                    case 20:
+                        dischargeHaract = selectedBattaryObj.Const20m;
+                        break;
+                    case 30:
+                        dischargeHaract = selectedBattaryObj.Const30m;
+                        break;
+                    case 45:
+                        dischargeHaract = selectedBattaryObj.Const45m;
+                        break;
+                    case 60:
+                        dischargeHaract = selectedBattaryObj.Const60m;
+                        break;
+                    case 90:
+                        dischargeHaract = selectedBattaryObj.Const90m;
+                        break;
+                    default:
+                        dischargeHaract = 1;
+                        break;
+                }
+            }
+            else
+            {
+                selectedTime = 0;
+                dischargeHaract = 0;
+            }
+            
+            float Pbat;
+            float Pelem;
+            double Nlin; //Количество линеек
+            int Nlinround; //Количество линее округленное
+
+            if (Pn > 0 && KPDakb > 0 && selectedBattaryObj != null && selectedTime > 0 && dischargeHaract > 0)
+            {
+                Pbat = (float)Pn * 100 / KPDakb; //Мощность батареи, кВт
+                Pelem = Pbat * 1000 / (NbatLin * 6); //Мощность элемента в батарее, Вт
+                Nlin = Pelem / dischargeHaract;
+                Nlinround = (int)Math.Ceiling(Nlin);
+                numOfLin.Content = Nlinround.ToString();
+                numOfAKB.Content = (Nlinround * NbatLin).ToString();
+            }
+            else
+            {
+                numOfLin.Content = "Не определено";
+                numOfAKB.Content = "Не определено";
+            }
+        }
+
+        private void TimeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RaschetKolLineek();
+        }
+        private void PowerTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            RaschetKolLineek();
+        }
         private void UPSList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UPSData uPS = (UPSData)UPSList.SelectedItem;
             KPDLable.Content = uPS.KPD.ToString();
             nBatLinLable.Content = uPS.nBatLin.ToString();
+            RaschetKolLineek();
         }
-
         private void BatList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BattaryData batData = (BattaryData)BatList.SelectedItem;
             if (batteryGrid.Items.Count > 0)
                 batteryGrid.Items.RemoveAt(0);
             batteryGrid.Items.Add(batData);
-        }
-
-        private void TimeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            RaschetKolLineek();
         }
     }
 }
