@@ -13,7 +13,11 @@ namespace UPS
         public List<UPSData> UPSDatas { get; set; } //Перечень ИБП
         public ListOfUPS()
         {
-            UPSDatas = new List<UPSData>();
+            UPSDatas = ReadData();
+        }
+        public List<UPSData> ReadData()
+        {
+            List<UPSData> UPSDatas = new List<UPSData>();
 
             using (var workbook = new XLWorkbook())
             {
@@ -46,7 +50,7 @@ namespace UPS
                             int numOfCell = 1;
                             if (numOfRows >= 2)
                             {
-                                int num=0;
+                                int num = 0;
                                 UPSData ups = new UPSData();
                                 foreach (var cell in row.Cells())
                                 {
@@ -84,6 +88,7 @@ namespace UPS
                     errorWindow.ErrorLable.Content = ex.ToString();
                 }
             }
+            return UPSDatas;
         }
     }
 }

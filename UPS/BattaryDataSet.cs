@@ -13,7 +13,11 @@ namespace UPS
         public List<BattaryData> battaryDatas { get; set; } //Перечень АКБ
         public BattaryDataSet()
         {
-            battaryDatas = new List<BattaryData>();
+            battaryDatas = ReadData();
+        }
+        public List<BattaryData> ReadData()
+        {
+            List<BattaryData>  battaryDatas = new List<BattaryData>();
 
             using (var workbook = new XLWorkbook())
             {
@@ -36,7 +40,7 @@ namespace UPS
                 {
                     var readWorkbook = new XLWorkbook(fullPathName);
 
-                    if(readWorkbook != null)
+                    if (readWorkbook != null)
                     {
                         var worksheet = readWorkbook.Worksheet(1);
 
@@ -199,7 +203,7 @@ namespace UPS
                         battaryDatas.RemoveAt(battaryDatas.Count - 1);
                     }
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     ErrorWindow errorWindow = new ErrorWindow();
                     errorWindow.Show();
@@ -207,6 +211,7 @@ namespace UPS
                     errorWindow.ErrorLable.Content = "Невозможно прочитать файл данных АКБ";
                 }
             }
+            return battaryDatas;
         }
         public object Clone() => this.MemberwiseClone();
     }

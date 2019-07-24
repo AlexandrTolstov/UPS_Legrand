@@ -32,7 +32,6 @@ namespace UPS
         internal sealed class DataSource
         {
             BattaryDataSet battaryDataSet = new BattaryDataSet();
-            BattaryDataSet battaryDataSet2 = new BattaryDataSet();
             List<TimeSet> batTimes = new List<TimeSet>
             {
                 new TimeSet(2),
@@ -49,9 +48,9 @@ namespace UPS
                 new TimeSet(90)
             };
             ListOfUPS listOfUPS = new ListOfUPS();
-            public IEnumerable<BattaryData> BattaryList => battaryDataSet.battaryDatas; //Считывает значения с BattaryDataSet
-            public IEnumerable<BattaryData> BattaryList2 => battaryDataSet2.battaryDatas; //Считывает значения с BattaryDataSet
-            public IEnumerable<UPSData> UPSList => listOfUPS.UPSDatas; //Считывает значения с listOfUPS
+            public IEnumerable<BattaryData> BattaryList => battaryDataSet.ReadData(); //Считывает значения с BattaryDataSet
+            public IEnumerable<BattaryData> BattaryList2 => battaryDataSet.ReadData(); //Считывает значения с BattaryDataSet
+            public IEnumerable<UPSData> UPSList => listOfUPS.ReadData(); //Считывает значения с listOfUPS
             public IEnumerable<TimeSet> batTimeList => batTimes; //Время автономии
         }
         public void RaschetKolLineek()
