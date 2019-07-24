@@ -52,7 +52,11 @@ namespace UPS
                                     switch (numOfCell)
                                     {
                                         case 1:
-                                            bat.ID = int.Parse(cell.Value.ToString());
+                                            int id;
+                                            if (int.TryParse(cell.Value.ToString(), out id))
+                                                bat.ID = id;
+                                            else
+                                                bat.ID = 0;
                                             break;
                                         case 2:
                                             bat.LegArt = cell.Value.ToString();
@@ -70,49 +74,109 @@ namespace UPS
                                             bat.Descrip = cell.Value.ToString();
                                             break;
                                         case 7:
-                                            bat.Capacity = int.Parse(cell.Value.ToString());
+                                            int cap;
+                                            if (int.TryParse(cell.Value.ToString(), out cap)) //Проверка возможно ли пропарсить
+                                                bat.Capacity = cap;
+                                            else
+                                                bat.Capacity = 0;
                                             break;
                                         case 8:
-                                            bat.Power = int.Parse(cell.Value.ToString());
+                                            int pow;
+                                            if (int.TryParse(cell.Value.ToString(), out pow))
+                                                bat.Power = pow;
+                                            else
+                                                bat.Power = 0;
                                             break;
                                         case 9:
-                                            bat.Voltage = int.Parse(cell.Value.ToString());
+                                            int volt;
+                                            if (int.TryParse(cell.Value.ToString(), out volt))
+                                                bat.Voltage = volt;
+                                            else
+                                                bat.Voltage = 0;
                                             break;
                                         case 10:
-                                            bat.Const2m = double.Parse(cell.Value.ToString());
+                                            double const2m;
+                                            if (double.TryParse(cell.Value.ToString(), out const2m))
+                                                bat.Const2m = const2m;
+                                            else
+                                                bat.Const2m = 0;
                                             break;
                                         case 11:
-                                            bat.Const4m = double.Parse(cell.Value.ToString());
+                                            double const4m;
+                                            if (double.TryParse(cell.Value.ToString(), out const4m))
+                                                bat.Const4m = const4m;
+                                            else
+                                                bat.Const4m = 0;
                                             break;
                                         case 12:
-                                            bat.Const5m = double.Parse(cell.Value.ToString());
+                                            double const5m;
+                                            if (double.TryParse(cell.Value.ToString(), out const5m))
+                                                bat.Const5m = const5m;
+                                            else
+                                                bat.Const5m = 0;
                                             break;
                                         case 13:
-                                            bat.Const6m = double.Parse(cell.Value.ToString());
+                                            double const6m;
+                                            if (double.TryParse(cell.Value.ToString(), out const6m))
+                                                bat.Const6m = const6m;
+                                            else
+                                                bat.Const6m = 0;
                                             break;
                                         case 14:
-                                            bat.Const8m = double.Parse(cell.Value.ToString());
+                                            double const8m;
+                                            if (double.TryParse(cell.Value.ToString(), out const8m))
+                                                bat.Const8m = const8m;
+                                            else
+                                                bat.Const8m = 0;
                                             break;
                                         case 15:
-                                            bat.Const10m = double.Parse(cell.Value.ToString());
+                                            double const10m;
+                                            if (double.TryParse(cell.Value.ToString(), out const10m))
+                                                bat.Const10m = const10m;
+                                            else
+                                                bat.Const10m = 0;
                                             break;
                                         case 16:
-                                            bat.Const15m = double.Parse(cell.Value.ToString());
+                                            double const15m;
+                                            if (double.TryParse(cell.Value.ToString(), out const15m))
+                                                bat.Const15m = const15m;
+                                            else
+                                                bat.Const15m = 0;
                                             break;
                                         case 17:
-                                            bat.Const20m = double.Parse(cell.Value.ToString());
+                                            double const20m;
+                                            if (double.TryParse(cell.Value.ToString(), out const20m))
+                                                bat.Const20m = const20m;
+                                            else
+                                                bat.Const20m = 0;
                                             break;
                                         case 18:
-                                            bat.Const30m = double.Parse(cell.Value.ToString());
+                                            double const30m;
+                                            if (double.TryParse(cell.Value.ToString(), out const30m))
+                                                bat.Const30m = const30m;
+                                            else
+                                                bat.Const30m = 0;
                                             break;
                                         case 19:
-                                            bat.Const45m = double.Parse(cell.Value.ToString());
+                                            double const45m;
+                                            if (double.TryParse(cell.Value.ToString(), out const45m))
+                                                bat.Const45m = const45m;
+                                            else
+                                                bat.Const45m = 0;
                                             break;
                                         case 20:
-                                            bat.Const60m = double.Parse(cell.Value.ToString());
+                                            double const60m;
+                                            if (double.TryParse(cell.Value.ToString(), out const60m))
+                                                bat.Const60m = const60m;
+                                            else
+                                                bat.Const60m = 0;
                                             break;
                                         case 21:
-                                            bat.Const90m = double.Parse(cell.Value.ToString());
+                                            double const90m;
+                                            if (double.TryParse(cell.Value.ToString(), out const90m))
+                                                bat.Const90m = const90m;
+                                            else
+                                                bat.Const90m = 0;
                                             break;
                                         case 22:
                                             bat.LegArt_Euro = cell.Value.ToString();
@@ -144,21 +208,6 @@ namespace UPS
                 }
             }
         }
-
-        //public object Clone()
-        //{
-        //    BattaryDataSet newBatDatSet = (BattaryDataSet)this.MemberwiseClone();
-        //    List<BattaryData> tempBatDataSet = new List<BattaryData>();
-
-        //    foreach (var it in this.battaryDatas)
-        //    {
-        //        BattaryData temBatData = (BattaryData)it.Clone();
-        //        tempBatDataSet.Add(temBatData);
-        //    }
-        //    newBatDatSet.battaryDatas = tempBatDataSet;
-        //    return newBatDatSet;
-        //}
-
         public object Clone() => this.MemberwiseClone();
     }
 }
