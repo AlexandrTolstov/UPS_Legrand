@@ -196,6 +196,7 @@ namespace UPS
                                     }
                                     numOfCell++;
                                 }
+                                bat.FullDescrip = $"{bat.Mark}, {bat.Manufact}, {bat.Descrip}";
                                 battaryDatas.Add(bat);
                             }
                             numOfRows++;

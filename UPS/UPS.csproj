@@ -75,6 +75,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="dischargeClasses\DishargePairs.cs" />
+    <Compile Include="PolinomLagrandj.cs" />
     <Compile Include="TimeSet.cs" />
     <Compile Include="UPSData.cs" />
     <Page Include="ErrorWindow.xaml">

@@ -16,6 +16,7 @@ namespace UPS
         public string Mark { get; set; } //Марка
         public string Manufact { get; set; } //Производитель
         public string Descrip { get; set; } //Описание
+        public string FullDescrip { get; set; } // Полное описание Description + Mark + Manufact
         public int Capacity { get; set; } //Емкость
         public int Power { get; set; } //Мощность
         public int Voltage { get; set; } //Напряжение
@@ -84,6 +85,8 @@ namespace UPS
             this.Const45m = Const45m;
             this.Const60m = Const60m;
             this.Const90m = Const90m;
+
+            this.FullDescrip = $"{Mark}, {Manufact}, {Descrip}";
         }
 
         public BattaryData()

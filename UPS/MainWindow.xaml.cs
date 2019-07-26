@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.IO;
 using ClosedXML.Excel;
 using System.Collections.ObjectModel;
+using UPS.dischargeClasses;
 
 namespace UPS
 {
@@ -22,12 +23,18 @@ namespace UPS
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
+    {      
         public MainWindow()
         {
+            
             InitializeComponent();
 
             DataContext = new DataSource();
+
+            //var dischList = new ObservableCollection<DishargePairs>();
+            //dischList.Add(new DishargePairs() { dischPower = 0, dischTime = 0 });
+            //this.dischGrid.ItemsSource = dischList;
+            //this.dischTable.Children
         }
         internal sealed class DataSource
         {
@@ -180,6 +187,50 @@ namespace UPS
                 batteryGrid.Items.RemoveAt(0);
             batteryGrid.Items.Add(batData);
             RaschetKolLineek();
+        }
+
+        private void AddColumn_Click(object sender, RoutedEventArgs e)
+        {
+            //var bordBrush1 = new Border { BorderThickness = new Thickness(1.0), BorderBrush = Brushes.Black };
+            var textBox1 = new TextBox { Width = 80, BorderThickness = new Thickness(1.0), BorderBrush = Brushes.Black };
+            var textBox2 = new TextBox { Width = 80, BorderThickness = new Thickness(1.0), BorderBrush = Brushes.Black };
+
+            dischTable.ColumnDefinitions.Add(new ColumnDefinition());
+            dischTable.Children.Add(textBox1);
+            dischTable.Children.Add(textBox2);
+
+            Grid.SetColumn(textBox1, dischTable.ColumnDefinitions.Count - 1);
+            Grid.SetColumn(textBox2, dischTable.ColumnDefinitions.Count - 1);
+            Grid.SetRow(textBox1, 0);
+            Grid.SetRow(textBox2, 1);
+
+        }
+
+        private void RemuveColumn_Click(object sender, RoutedEventArgs e)
+        {
+            if (dischTable.ColumnDefinitions.Count > 2)
+            {
+                dischTable.ColumnDefinitions.RemoveAt(dischTable.ColumnDefinitions.Count-1);
+            }
+        }
+
+        private void GetValue_Click(object sender, RoutedEventArgs e)
+        {
+            string txt = "";
+            txt = GetValueGrid(0, 0);
+            
+            InfoLable.Content = txt;
+        }    
+        public string GetValueGrid(int row, int col)//Функция получения значений из Grid по номеру ряда и столбца
+        {
+            string txt = "";
+            if (row >= 0 && col >= 0)
+            {
+                var ch = dischTable.Children.Cast<UIElement>().First(b => Grid.GetRow(b) == row && Grid.GetColumn(b) == col + 1);
+                txt = (((TextBox)ch).Text).ToString();
+            }
+            else txt = "не верный диапозон";
+            return txt;
         }
     }
 }

@@ -77,11 +77,11 @@
                                             <StackPanel>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Label FontWeight="Normal">АКБ</Label>
-                                                    <ComboBox FontWeight="Normal" x:Name="BatList" Width="200" VerticalAlignment="Top" 
+                                                    <ComboBox FontWeight="Normal" x:Name="BatList" Width="280" VerticalAlignment="Top" 
                                                       ItemsSource="{Binding BattaryList}"
-                                                      DisplayMemberPath="Descrip" 
-                                                      SelectedValuePath="Descrip" 
-                                                      SelectedValue="{Binding Descrip}"
+                                                      DisplayMemberPath="FullDescrip" 
+                                                      SelectedValuePath="FullDescrip" 
+                                                      SelectedValue="{Binding FullDescrip}"
                                                       SelectionChanged="BatList_SelectionChanged">
                                                     </ComboBox>
                                                 </StackPanel>
@@ -522,7 +522,63 @@
             </TabItem>
 
             <!--Добавление АКБ-->
-            <TabItem x:Name="addBat"></TabItem>
+            <TabItem x:Name="addBat">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/jpg/Battary.png" Width="15" Height="15"/>
+                        <TextBlock Margin="3">Добавление АКБ</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ScrollViewer>
+                        <Border Background="White" BorderBrush="Gainsboro" BorderThickness="3">
+                            <StackPanel Orientation="Vertical">
+                                <!--<DataGrid
+                                    AutoGenerateColumns="False"  
+                                    HorizontalAlignment="Left" 
+                                    Name="dischGrid" 
+                                    VerticalAlignment="Top">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Path=dischTime}" Header="Время разряда, мин" MinWidth="50" />
+                                        <DataGridTextColumn Binding="{Binding Path=dischPower}" Header="Мощность, Вт/ячейку" MinWidth="50" />
+                                        <DataGridComboBoxColumn></DataGridComboBoxColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>-->
+                                <Label>Таблица разрядной характеристики АКБ</Label>
+                                <StackPanel Orientation="Horizontal">
+                                    <Grid x:Name="dischTable">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200"></ColumnDefinition>
+                                            <ColumnDefinition Width="80"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Border BorderThickness="1" BorderBrush="Black" Grid.Row="0" Grid.Column="0">
+                                            <Label>Время разряда, мин</Label>
+                                        </Border>
+                                        <Border BorderThickness="1" BorderBrush="Black" Grid.Row="1" Grid.Column="0">
+                                            <Label>Мощность, Вт/ячейку</Label>
+                                        </Border>
+                                        <TextBox BorderThickness="1" BorderBrush="Black" Grid.Row="0" Grid.Column="1"></TextBox>
+                                        <TextBox BorderThickness="1" BorderBrush="Black" Grid.Row="1" Grid.Column="1"></TextBox>
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="AddColumn" Click="AddColumn_Click">Добавит столбец</Button>
+                                    <Button x:Name="RemuveColumn" Click="RemuveColumn_Click">Убрать столбец</Button>
+                                    <Button x:Name="GetValue" Click="GetValue_Click">Считать данные</Button>
+                                    <Label x:Name="InfoLable"></Label>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button>Расчитать характеристику</Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </ScrollViewer>
+                </TabItem.Content>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
