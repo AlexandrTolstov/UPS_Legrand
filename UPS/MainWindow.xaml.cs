@@ -217,8 +217,13 @@ namespace UPS
         private void GetValue_Click(object sender, RoutedEventArgs e)
         {
             string txt = "";
-            txt = GetValueGrid(0, 0);
-            
+            for (int i = 0; i < dischTable.ColumnDefinitions.Count; i++)
+            {
+                for (int j = 0; j < dischTable.RowDefinitions.Count; j++)
+                {
+                    txt += GetValueGrid(j, i); 
+                }
+            }
             InfoLable.Content = txt;
         }    
         public string GetValueGrid(int row, int col)//Функция получения значений из Grid по номеру ряда и столбца
