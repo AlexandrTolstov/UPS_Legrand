@@ -26,13 +26,17 @@
                                 <GroupBox Header="Искомые величины" FontWeight="Bold">
                                     <StackPanel Orientation="Horizontal">
                                         <GroupBox Header="Количесво линеек" Padding="5" Margin="5">
-                                            <StackPanel Background="LightSeaGreen"  Orientation="Horizontal">
+                                            <StackPanel Background="LightSeaGreen"  Orientation="Horizontal" 
+                                                        MouseEnter="StackPanel_MouseEnter"
+                                                        MouseLeave="StackPanel_MouseLeave">
                                                 <Label FontSize="15" >Nлинеек =</Label>
                                                 <Label FontSize="15" x:Name="numOfLin"></Label>
                                             </StackPanel>
                                         </GroupBox>
                                         <GroupBox Header="Количесво АКБ" Padding="5" Margin="5">
-                                            <StackPanel Background="LightSeaGreen"  Orientation="Horizontal">
+                                            <StackPanel Background="LightSeaGreen"  Orientation="Horizontal"
+                                                        MouseEnter="StackPanel_MouseEnter"
+                                                        MouseLeave="StackPanel_MouseLeave">
                                                 <Label FontSize="15" >Nакб =</Label>
                                                 <Label FontSize="15" x:Name="numOfAKB"></Label>
                                             </StackPanel>

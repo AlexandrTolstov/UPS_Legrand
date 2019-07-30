@@ -217,7 +217,7 @@ namespace UPS
         private void GetValue_Click(object sender, RoutedEventArgs e)
         {
             string txt = "";
-            for (int i = 0; i < dischTable.ColumnDefinitions.Count; i++)
+            for (int i = 0; i < dischTable.ColumnDefinitions.Count - 1; i++)
             {
                 for (int j = 0; j < dischTable.RowDefinitions.Count; j++)
                 {
@@ -236,6 +236,16 @@ namespace UPS
             }
             else txt = "не верный диапозон";
             return txt;
+        }
+
+        private void StackPanel_MouseEnter(object sender, MouseEventArgs e)
+        {
+            (sender as StackPanel).Background = Brushes.Yellow;
+        }
+
+        private void StackPanel_MouseLeave(object sender, MouseEventArgs e)
+        {
+            (sender as StackPanel).Background = Brushes.LightSeaGreen;
         }
     }
 }
