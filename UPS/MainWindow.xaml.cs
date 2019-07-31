@@ -235,19 +235,7 @@ namespace UPS
                 txt += "\n";
             }
             InfoLable.Content = txt;
-        }    
-        public string GetValueGrid(int row, int col)//Функция получения значений из Grid по номеру ряда и столбца
-        {
-            string txt = "";
-            if (row >= 0 && col >= 0)
-            {
-                var ch = dischTable.Children.Cast<UIElement>().First(b => Grid.GetRow(b) == row && Grid.GetColumn(b) == col + 1);
-                txt = (((TextBox)ch).Text).ToString();
-            }
-            else txt = "не верный диапозон";
-            return txt;
-        }
-
+        }  
         private void StackPanel_MouseEnter(object sender, MouseEventArgs e)
         {
             (sender as StackPanel).Background = Brushes.Yellow;
