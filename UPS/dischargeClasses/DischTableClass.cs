@@ -11,10 +11,6 @@ namespace UPS.dischargeClasses
     public static class DischTableClass
     {
         public static List<DishargePairs> dishargePairs = new List<DishargePairs>();
-        //public static void AddPair(DishargePairs pairs)
-        //{
-        //    dishargePairs.Add(pairs);
-        //}
         public static void AddPairs(Grid table)
         {
             string txt1 = "";
