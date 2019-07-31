@@ -36,22 +36,14 @@ namespace UPS.dischargeClasses
                         txt2 = GetValueGrid(j, i, table);
                     }                  
                 }
-                if(int.TryParse(txt1, out time))
-                {
-                    if(float.TryParse(txt2, out power))
-                    {
-                        dishargePairs.Add(new DishargePairs { dischTime = time, dischPower = power });
-                    }
-                    else
-                    {
-                        dishargePairs.Add(new DishargePairs { dischTime = 0, dischPower = 0 });
-                        MessageBox.Show("Неверный формат введенных данных");
-                    }
-                }
-                else
+                if(int.TryParse(txt1, out time) == false || float.TryParse(txt2, out power) == false)
                 {
                     dishargePairs.Add(new DishargePairs { dischTime = 0, dischPower = 0 });
                     MessageBox.Show("Неверный формат введенных данных");
+                }
+                else
+                {
+                    dishargePairs.Add(new DishargePairs { dischTime = time, dischPower = power });
                 }              
             }
         }
