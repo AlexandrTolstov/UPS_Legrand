@@ -75,8 +75,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="dischargeClasses\DischTableClass.cs" />
     <Compile Include="dischargeClasses\DishargePairs.cs" />
-    <Compile Include="PolinomLagrandj.cs" />
+    <Compile Include="polinomClasses\PolinomLagrandj.cs" />
     <Compile Include="TimeSet.cs" />
     <Compile Include="UPSData.cs" />
     <Page Include="ErrorWindow.xaml">
@@ -91,8 +92,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BattaryData.cs" />
-    <Compile Include="BattaryDataSet.cs" />
+    <Compile Include="battaryClasses\BattaryData.cs" />
+    <Compile Include="battaryClasses\BattaryDataSet.cs" />
     <Compile Include="ErrorWindow.xaml.cs">
       <DependentUpon>ErrorWindow.xaml</DependentUpon>
     </Compile>

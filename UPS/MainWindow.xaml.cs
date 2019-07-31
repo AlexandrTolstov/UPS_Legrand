@@ -203,26 +203,36 @@ namespace UPS
             Grid.SetColumn(textBox2, dischTable.ColumnDefinitions.Count - 1);
             Grid.SetRow(textBox1, 0);
             Grid.SetRow(textBox2, 1);
-
         }
 
         private void RemuveColumn_Click(object sender, RoutedEventArgs e)
         {
             if (dischTable.ColumnDefinitions.Count > 2)
             {
-                dischTable.ColumnDefinitions.RemoveAt(dischTable.ColumnDefinitions.Count-1);
+                dischTable.ColumnDefinitions.RemoveAt(dischTable.ColumnDefinitions.Count - 1);
+                dischTable.Children.RemoveAt(dischTable.Children.Count - 1);
+                dischTable.Children.RemoveAt(dischTable.Children.Count - 1);
             }
         }
 
         private void GetValue_Click(object sender, RoutedEventArgs e)
         {
             string txt = "";
-            for (int i = 0; i < dischTable.ColumnDefinitions.Count - 1; i++)
+            DischTableClass.AddPairs(dischTable);
+            foreach (var item in DischTableClass.dishargePairs)
             {
-                for (int j = 0; j < dischTable.RowDefinitions.Count; j++)
+                if(item.dischPower == 0 || item.dischTime == 0)
                 {
-                    txt += GetValueGrid(j, i); 
+                    MessageBox.Show("Вы не заполнили все ячеки");
+                    break;
                 }
+            }
+            foreach (var item in DischTableClass.dishargePairs)
+            {
+                txt += item.dischTime.ToString();
+                txt += "-";
+                txt += item.dischPower.ToString();
+                txt += "\n";
             }
             InfoLable.Content = txt;
         }    
